@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Relay — Downloads</title>
+<style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #f5f5f5;
+        --bg-card: #fff;
+        --bg-elevated: #f9f9f9;
+        --text: #1a1a2e;
+        --text-muted: #666;
+        --text-dim: #999;
+        --accent: #10b981;
+        --accent-bright: #059669;
+        --accent-dim: rgba(16, 185, 129, 0.08);
+        --accent-glow: rgba(16, 185, 129, 0.15);
+        --border: #e5e7eb;
+        --border-light: #ddd;
+        --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: var(--font);
+        font-size: 15px;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+        position: sticky;
+        top: 0;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        z-index: 100;
+        width: 100%;
+    }
+    .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    .logo {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+        font-family: var(--font);
+    }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links > a:not(.btn) {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.15s;
+        font-family: var(--font);
+    }
+    .nav-links > a:not(.btn):hover { color: var(--text); }
+
+    /* BUTTON */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 11px 24px;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background 0.15s, box-shadow 0.15s;
+        font-family: var(--font);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .btn:hover {
+        background: var(--accent-bright);
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+    }
+    .btn-outline {
+        background: transparent;
+        border: 1.5px solid var(--border-light);
+        color: var(--text);
+        box-shadow: none;
+    }
+    .btn-outline:hover {
+        border-color: #bbb;
+        color: var(--text);
+        background: rgba(0,0,0,0.02);
+    }
+    .btn-sm { padding: 8px 18px; font-size: 13px; }
+
+    /* MAIN LAYOUT */
+    .main-wrapper { flex: 1 0 auto; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    section { padding: 80px 0; }
+
+    .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-dim);
+        margin-bottom: 16px;
+        font-family: var(--font);
+    }
+    .section-label::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 2px;
+        opacity: 0.5;
+    }
+    .section-title {
+        font-size: clamp(28px, 4vw, 40px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 12px;
+        line-height: 1.15;
+    }
+    .section-sub {
+        font-size: 17px;
+        color: var(--text-muted);
+        max-width: 520px;
+        line-height: 1.5;
+        margin-bottom: 40px;
+    }
+
+    /* CARDS */
+    .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 28px 24px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+        border-color: var(--border-light);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .card h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 16px;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+        background: #1e1e2e;
+        border: 1px solid #313244;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .code-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-bottom: 1px solid #313244;
+        background: #181825;
+    }
+    .code-lang {
+        font-size: 12px;
+        color: #89b4fa;
+        font-family: var(--mono);
+        font-weight: 500;
+    }
+    pre {
+        padding: 20px 24px;
+        overflow-x: auto;
+        font-family: var(--mono);
+        font-size: 13.5px;
+        line-height: 1.65;
+        color: #cdd6f4;
+    }
+    pre .kw { color: #cba6f7; }
+    pre .str { color: #a6e3a1; }
+    pre .cm { color: #6c7086; }
+    pre .fn { color: #89b4fa; }
+
+    /* TABLE */
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+        text-align: left;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+    }
+    th {
+        color: var(--text-dim);
+        font-weight: 500;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+    td { color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* BADGE */
+    .badge {
+        display: inline-block;
+        background: var(--accent-dim);
+        color: var(--accent-bright);
+        font-size: 12px;
+        padding: 2px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    /* DOWNLOAD ROW */
+    .download-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+    }
+    .download-row + .download-row { border-top: 1px solid var(--border); }
+    .dl-arch { font-weight: 500; font-size: 14px; }
+    .dl-meta { display: flex; align-items: center; gap: 16px; }
+    .dl-size { font-size: 13px; color: var(--text-muted); }
+    .dl-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background 0.15s;
+    }
+    .dl-btn:hover { background: var(--accent-bright); text-decoration: none; }
+
+    /* FOOTER */
+    footer {
+        border-top: 1px solid var(--border);
+        padding: 32px 0;
+        flex-shrink: 0;
+    }
+    .footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .footer-copy { font-size: 13px; color: var(--text-dim); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--text-dim); text-decoration: none; }
+    .footer-links a:hover { color: var(--text-muted); }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+        .download-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .dl-meta { width: 100%; justify-content: space-between; }
+        section { padding: 48px 0; }
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="https://agentforms.io" class="logo">Agent<span>Forms</span></a>
+        <div class="nav-links">
+            <a href="https://agentforms.io/features">Features</a>
+            <a href="https://agentforms.io/pricing">Pricing</a>
+            <a href="https://agentforms.io/api/docs">Docs</a>
+            <a href="https://agentforms.io">Go to App</a>
+        </div>
+    </div>
+</nav>
+
+<div class="main-wrapper">
+    <section>
+        <div class="container">
+            <span class="section-label">Downloads</span>
+            <h1 class="section-title">Agent Relay</h1>
+            <p class="section-sub">CLI email relay for AI agents — send files via SMTP from any terminal.</p>
+
+            <!-- INSTALL -->
+            <div class="card">
+                <h2>Quick Install</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre>curl -sL https://relay.agentforms.io/install.sh | bash
+<span class="cm"># auto-detects your architecture</span></pre>
+                </div>
+            </div>
+
+            <!-- BINARIES -->
+            <div class="card">
+                <h2>Binaries <span class="badge">v0.2.6</span></h2>
+                <div class="download-row">
+                    <span class="dl-arch">Linux x86_64</span>
+                    <div class="dl-meta">
+                        <span class="dl-size">7.9 MB</span>
+                        <a href="relay-linux-amd64" class="dl-btn">Download</a>
+                    </div>
+                </div>
+                <div class="download-row">
+                    <span class="dl-arch">Linux ARM64</span>
+                    <div class="dl-meta">
+                        <span class="dl-size">7.4 MB</span>
+                        <a href="relay-linux-arm64" class="dl-btn">Download</a>
+                    </div>
+                </div>
+                <div class="download-row">
+                    <span class="dl-arch">Linux ARMv7</span>
+                    <div class="dl-meta">
+                        <span class="dl-size">7.6 MB</span>
+                        <a href="relay-linux-arm" class="dl-btn">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USAGE -->
+            <div class="card">
+                <h2>Usage</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre>relay setup
+<span class="cm"># configure SMTP credentials</span>
+
+relay send -t user@example.com -f file.pdf
+
+relay serve
+<span class="cm"># start web UI on :5090</span></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <span class="footer-copy">&copy; 2026 AgentForms</span>
+            <div class="footer-links">
+                <a href="https://github.com/15Greps/agent-relay">GitHub</a>
+                <a href="https://agentforms.io">AgentForms.io</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

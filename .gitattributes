@@ -1,0 +1,15 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Explicitly declare text files
+*.go text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+
+# Binary files
+*.bin binary
+*.gz binary
+*.zip binary
+*.tar binary

@@ -1,0 +1,23 @@
+[Unit]
+Description=Agent Relay - File-to-Email Relay Service
+Documentation=https://github.com/15Greps/agent-relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+Group=%i
+ExecStart=/usr/local/bin/relay serve --port 5090
+Restart=on-failure
+RestartSec=5
+Environment=HOME=/home/%i
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/%i/.config/agent-relay /home/%i/.local/state/agent-relay
+
+[Install]
+WantedBy=multi-user.target
